@@ -1,10 +1,25 @@
 sudo: required 
 services: 
         - docker ##we need docker installed for further steps  
+
 before_install: 
         - docker build -t karanshreds/docker-react -f Dockerfile.dev .
 
 script: 
         - docker run karanshreds/docker-react npm run test -- --coverage  
+
+deploy:
+        provider: elasticbeanstalk
+        region: "us-east-1"
+        app: "docker"
+        env: "Docker-env"
+        bucket_name: "elasticbeanstalk-us-east-1-412841717530"
+        bucket_path: "Docker"
+        on:
+                branch: master
+        access_key_id: "$AWS_ACCESS_KEY"
+        secret_access_key:
+                secure: "AWS_SECRET_KEY"         
+
                   
           
