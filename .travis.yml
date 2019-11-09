@@ -1,0 +1,10 @@
+sudo: required 
+services: 
+        - docker ##we need docker installed for further steps  
+before_install: 
+        - docker build -t karanshreds/docker-react -f Dockerfile.dev .
+
+script: 
+        - docker run karanshreds/react npm run test -- --coverage  
+                  
+          
